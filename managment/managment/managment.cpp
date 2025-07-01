@@ -22,7 +22,6 @@ int main() {
     //    return 1;
     //}
     //RemoteManagement manager;
-    //return 0;
 
     WORD wVersionRequested;
     WSADATA wsaData;
@@ -55,7 +54,9 @@ int main() {
     SOCKET clientSocket = accept(listeningSocket, NULL, NULL);
     recv(clientSocket, sizeInput, MAX_MESSAGE_SIZE_DIGITS, 0);
     size = atoi(sizeInput);
+    realloc(buffer, sizeof(char) * size);
     recv(clientSocket, buffer, size, 0);
+    buffer[size] = NULL;
     std::cout << buffer << std::endl;
 
 
