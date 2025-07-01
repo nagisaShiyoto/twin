@@ -9,7 +9,7 @@ void RemoteManagement::createPopUp() {
 }
 
 void RemoteManagement::addToRegistry() {
-    LSTATUS status = RegSetKeyValueA(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", "test",
+    LSTATUS status = RegSetKeyValueA(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", "remote_managment",
                                      REG_SZ, EXECUTABLE_PATH_VALUE, sizeof(char) * (strlen(EXECUTABLE_PATH_VALUE) + 1));
     if (status == ERROR_SUCCESS) {
         std::cout << "added to the autorun successfully" << std::endl;
