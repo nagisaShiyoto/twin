@@ -3,6 +3,6 @@
 #include "windowsApiHandlers.h"
 
 RemoteManagement::RemoteManagement() { 
-	registryHandler::addProcessRegistry();
+    RegistryHandler::addProcessRegistry();
     createPopUp();
 };
