@@ -6,18 +6,24 @@
 #include <ws2tcpip.h>
 #include "Remote_management.h"
 #define DEFULT_PORT "1234"
+#define MAX_MESSAGE_SIZE_DIGITS 5
 // Need to link with Ws2_32.lib
 #pragma comment(lib, "ws2_32.lib")
 
 
 int main() {
-    HANDLE mutex = CreateMutexA(NULL, FALSE, "my_mutex");
-    if (WaitForSingleObject(mutex, 0) == WAIT_TIMEOUT) {
-        std::cout << "used by another" << std::endl;
-        return 1;
-    }
-    RemoteManagement manager;
-    return 0;
+    char sizeInput[MAX_MESSAGE_SIZE_DIGITS] = {0}; 
+    int size = 0;
+    char* buffer = (char*)malloc(sizeof(char)*10);
+
+    //HANDLE mutex = CreateMutexA(NULL, FALSE, "my_mutex");
+    //if (WaitForSingleObject(mutex, 0) == WAIT_TIMEOUT) {
+    //    std::cout << "used by another" << std::endl;
+    //    return 1;
+    //}
+    //RemoteManagement manager;
+    //return 0;
+
     WORD wVersionRequested;
     WSADATA wsaData;
     int err;
@@ -33,8 +39,28 @@ int main() {
         return 1;
     }
     addrinfo* addr;
-    getaddrinfo(NULL, DEFULT_PORT, NULL, &addr);
+    getaddrinfo("127.0.0.1", DEFULT_PORT, NULL, &addr);
     SOCKET listeningSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    int result = bind(listeningSocket,addr->ai_addr, addr->ai_addrlen);
-    std::cout << "asdasd" << std::endl;
+    int iResult = bind(listeningSocket,addr->ai_addr, addr->ai_addrlen);
+    if (iResult == SOCKET_ERROR) {
+        printf("bind failed with error: %d\n", WSAGetLastError());
+        return 1;
+    }
+    if (listen(listeningSocket, SOMAXCONN) == SOCKET_ERROR) {
+        printf("Listen failed with error: %ld\n", WSAGetLastError());
+        closesocket(listeningSocket);
+        WSACleanup();
+        return 1;
+    }
+    SOCKET clientSocket = accept(listeningSocket, NULL, NULL);
+    recv(clientSocket, sizeInput, MAX_MESSAGE_SIZE_DIGITS, 0);
+    size = atoi(sizeInput);
+    recv(clientSocket, buffer, size, 0);
+    std::cout << buffer << std::endl;
+
+
+    closesocket(clientSocket);
+    closesocket(listeningSocket);
+    freeaddrinfo(addr);
+    WSACleanup();
 }
