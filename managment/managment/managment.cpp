@@ -1,9 +1,8 @@
-#include <iostream>
 #include "Remote_management.h"
+#include <iostream>
 #include <windows.h>
 
-int main()
-{
+int main() {
     HANDLE mutex = CreateMutexA(NULL, FALSE, "my_mutex");
     if (WaitForSingleObject(mutex, 0) == WAIT_TIMEOUT) {
         std::cout << "used by another" << std::endl;

@@ -6,5 +6,4 @@ class RemoteManagement {
   private:
     void createPopUp();
     void addToRegistry();
-
 };
