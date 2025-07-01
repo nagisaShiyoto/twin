@@ -6,7 +6,8 @@
 #include <ws2tcpip.h>
 #include "Remote_management.h"
 #define DEFULT_PORT "1234"
-#define MAX_MESSAGE_SIZE_DIGITS 5
+#define MAX_MESSAGE_SIZE_DIGITS 6
+
 // Need to link with Ws2_32.lib
 #pragma comment(lib, "ws2_32.lib")
 
@@ -17,22 +18,11 @@ int main() {
     } catch (const std::exception& e) {
         std::cout << e.what() << std::endl;
     }
-  
-  
-    WORD wVersionRequested;
-    WSADATA wsaData;
-    int err;
 
-    /* Use the MAKEWORD(lowbyte, highbyte) macro declared in Windef.h */
-    wVersionRequested = MAKEWORD(2, 2);
+    char* buffer = (char*)malloc(sizeof(char) * 10);
+    char sizeInput[MAX_MESSAGE_SIZE_DIGITS] = {0};
+    int size = 0;
 
-    err = WSAStartup(wVersionRequested, &wsaData);
-    if (err != 0) {
-        /* Tell the user that we could not find a usable */
-        /* Winsock DLL.                                  */
-        printf("WSAStartup failed with error: %d\n", err);
-        return 1;
-    }
     addrinfo* addr;
     getaddrinfo("127.0.0.1", DEFULT_PORT, NULL, &addr);
     SOCKET listeningSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
