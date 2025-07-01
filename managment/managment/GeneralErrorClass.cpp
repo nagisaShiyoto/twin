@@ -7,3 +7,6 @@ GeneralErrorClass::GeneralErrorClass(std::string const errorMsg) {
 std::string GeneralErrorClass::getError() const {
     return this->m_errorMsg;
 }
+
+GeneralErrorClass::~GeneralErrorClass() {
+}

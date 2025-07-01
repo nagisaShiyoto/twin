@@ -16,9 +16,9 @@ class GeneralErrorClass {
     */
     std::string getError() const;
     /*
-    * pure virtual function dtor for inheritance
+    * function dtor for inheritance
     */
-    virtual ~GeneralErrorClass() = 0;
+    ~GeneralErrorClass();
 
   protected:
     std::string m_errorMsg;
