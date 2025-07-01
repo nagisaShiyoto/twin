@@ -12,17 +12,13 @@
 
 
 int main() {
-    char sizeInput[MAX_MESSAGE_SIZE_DIGITS] = {0}; 
-    int size = 0;
-    char* buffer = (char*)malloc(sizeof(char)*10);
-
-    //HANDLE mutex = CreateMutexA(NULL, FALSE, "my_mutex");
-    //if (WaitForSingleObject(mutex, 0) == WAIT_TIMEOUT) {
-    //    std::cout << "used by another" << std::endl;
-    //    return 1;
-    //}
-    //RemoteManagement manager;
-
+    try {
+        RemoteManagement manager;
+    } catch (const std::exception& e) {
+        std::cout << e.what() << std::endl;
+    }
+  
+  
     WORD wVersionRequested;
     WSADATA wsaData;
     int err;

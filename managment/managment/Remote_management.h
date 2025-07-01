@@ -1,9 +1,13 @@
 #pragma once
+#define PATH_SIZE 100
+#include <Windows.h>
+#include "processMutex.h"
+
 class RemoteManagement {
   public:
+
     RemoteManagement();
 
   private:
-    void createPopUp();
-    void addToRegistry();
+    processMutex m_mutex;
 };
