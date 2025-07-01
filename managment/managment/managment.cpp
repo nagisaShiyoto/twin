@@ -3,11 +3,11 @@
 #include <windows.h>
 
 int main() {
-    HANDLE mutex = CreateMutexA(NULL, FALSE, "my_mutex");
-    if (WaitForSingleObject(mutex, 0) == WAIT_TIMEOUT) {
-        std::cout << "used by another" << std::endl;
-        return 1;
+
+    try {
+        RemoteManagement manager;
+    } catch (const std::exception& e) {
+        std::cout << e.what() << std::endl;
     }
-    RemoteManagement manager;
     return 0;
 }
