@@ -13,7 +13,7 @@ std::string RegistryHandler::getProccessPath(int size) {
     if (pathSize == size)
     {
         delete[] executablePath;
-        throw ShortPassError("couldn't get process path");
+        throw ShortPathError("couldn't get process path\npath size too small");
     }
     strPath.assign(executablePath);
     delete[] executablePath;
@@ -45,11 +45,11 @@ RegistryError::~RegistryError() {
     //empty code block
 }
 
-ShortPassError::ShortPassError(std::string errorMessage) : GeneralErrorClass(errorMessage) {
+ShortPathError::ShortPathError(std::string errorMessage) : GeneralErrorClass(errorMessage) {
     //empty code block
 }
 
-ShortPassError::~ShortPassError() {
+ShortPathError::~ShortPathError() {
     //empty code block
 }
 

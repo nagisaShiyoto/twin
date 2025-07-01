@@ -44,17 +44,17 @@ class RegistryError : public GeneralErrorClass{
     ~RegistryError();
 };
 
-class ShortPassError : public GeneralErrorClass {
+class ShortPathError : public GeneralErrorClass {
   public:
     /*
      * create short pass error object(inherit from general error class)
      *
      * @param errorMessage - the error description
      */
-    ShortPassError(std::string const errorMessage);
+    ShortPathError(std::string const errorMessage);
     /*
      * distructor for the object,
      * do nothing, mostly for inheritance
      */
-    ~ShortPassError();
+    ~ShortPathError();
 };
