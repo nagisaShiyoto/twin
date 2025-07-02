@@ -4,7 +4,6 @@
 
 #define ERROR_SIZE 100
 #define AUTORUN_REGISTRY_PATH "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
-#define AUTORAN_NAME "remote_manager"
 
 std::string RegistryHandler::getProccessPath(int size) {
     std::string executablePath("", size);
@@ -17,14 +16,14 @@ std::string RegistryHandler::getProccessPath(int size) {
     return executablePath;
 }
 
-void RegistryHandler::addToRegistry(std::string const executablePath, std::string const autoranName) {
-    char error[ERROR_SIZE] = {0};
+void RegistryHandler::addToRegistry(std::string const executablePath, std::string const autoRanName) {
+    std::string error("", ERROR_SIZE);
 
-    LSTATUS status = RegSetKeyValueA(HKEY_CURRENT_USER, AUTORUN_REGISTRY_PATH, autoranName.c_str(), REG_SZ,
+    LSTATUS status = RegSetKeyValueA(HKEY_CURRENT_USER, AUTORUN_REGISTRY_PATH, autoRanName.c_str(), REG_SZ,
                                      executablePath.c_str(), sizeof(char) * (executablePath.length() + 1));
     
     if (status != ERROR_SUCCESS) {
-        FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, NULL, NULL, error, ERROR_SIZE, NULL);
+        FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, NULL, NULL, const_cast<char*>(error.c_str()), ERROR_SIZE, NULL);
         throw RegistryException(error);
     }
 }

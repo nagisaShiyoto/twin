@@ -18,7 +18,7 @@ class RegistryHandler {
      * @param autoranName - the registry key name
      * @exception - throw RegistryError exception if addToRegistry not worked
      */
-    static void addToRegistry(std::string executablePath, std::string autoranName = "autoRun");
+    static void addToRegistry(std::string executablePath, std::string autoRanName = "autoRun");
     /*
     * add the running process to the autorun registry
     * 
