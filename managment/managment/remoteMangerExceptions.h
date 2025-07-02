@@ -14,11 +14,11 @@ class GeneralExceptionClass {
     * 
     * @return - the error description
     */
-    std::string getError() const;
+    virtual std::string getError() const;
     /*
     * function dtor for inheritance
     */
-    ~GeneralExceptionClass();
+    virtual ~GeneralExceptionClass();
 
   protected:
     std::string m_errorMsg;
@@ -36,7 +36,7 @@ class MutexException : public GeneralExceptionClass {
      * distructor for the object,
      * do nothing, mostly for inheritance
      */
-    ~MutexException();
+    virtual ~MutexException();
 };
 
 class RegistryException : public GeneralExceptionClass {
@@ -51,7 +51,7 @@ class RegistryException : public GeneralExceptionClass {
      * distructor for the object,
      * do nothing, mostly for inheritance
      */
-    ~RegistryException();
+    virtual ~RegistryException();
 };
 
 class ShortPathException : public GeneralExceptionClass {
@@ -66,5 +66,5 @@ class ShortPathException : public GeneralExceptionClass {
      * distructor for the object,
      * do nothing, mostly for inheritance
      */
-    ~ShortPathException();
+    virtual ~ShortPathException();
 };
