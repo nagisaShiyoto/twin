@@ -2,49 +2,49 @@
 #include "remoteMangerExceptions.h"
 class generalSocketException : public GeneralExceptionClass {
   public:
-    generalSocketException(std::string error);
+    generalSocketException(const std::string& error);
 
     virtual ~generalSocketException();
 };
 
 class WsaException : public generalSocketException {
   public:
-    WsaException(std::string error);
+    WsaException(const std::string& error);
 
     virtual ~WsaException();
 };
 
 class PaddingException : public GeneralExceptionClass {
   public:
-    PaddingException(std::string error);
+    PaddingException(const std::string& error);
 
     virtual ~PaddingException();
 };
 
 class BindingException : public generalSocketException {
   public:
-    BindingException(std::string error);
+    BindingException(const std::string& error);
 
     virtual ~BindingException();
 };
 
 class AddressCreationException : public generalSocketException {
   public:
-    AddressCreationException(std::string error);
+    AddressCreationException(const std::string& error);
 
     virtual ~AddressCreationException();
 };
 
 class ListenException : public generalSocketException {
   public:
-    ListenException(std::string error);
+    ListenException(const std::string& error);
 
     virtual ~ListenException();
 };
 
 class AcceptClientException : public generalSocketException {
   public:
-    AcceptClientException(std::string error);
+    AcceptClientException(const std::string& error);
 
     virtual ~AcceptClientException();
 };

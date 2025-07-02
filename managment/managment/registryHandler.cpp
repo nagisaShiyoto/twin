@@ -16,7 +16,7 @@ std::string RegistryHandler::getProccessPath(int size) {
     return executablePath;
 }
 
-void RegistryHandler::addToRegistry(std::string const executablePath, std::string const autoRanName) {
+void RegistryHandler::addToRegistry(const std::string& executablePath, const std::string& autoRanName) {
     std::string error("", ERROR_SIZE);
 
     LSTATUS status = RegSetKeyValueA(HKEY_CURRENT_USER, AUTORUN_REGISTRY_PATH, autoRanName.c_str(), REG_SZ,

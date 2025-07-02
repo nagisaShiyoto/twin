@@ -8,7 +8,7 @@ class GeneralExceptionClass {
     * 
     * @param errorMessage - the error description
     */
-    GeneralExceptionClass(std::string const errorMessage);
+    GeneralExceptionClass(const std::string& errorMessage);
     /*
     * returning the error description
     * 
@@ -31,9 +31,9 @@ class MutexException : public GeneralExceptionClass {
      *
      * @param errorMessage - the error description
      */
-    MutexException(std::string const errorMessage);
+    MutexException(const std::string& errorMessage);
     /*
-     * distructor for the object,
+     * destructor for the object,
      * do nothing, mostly for inheritance
      */
     virtual ~MutexException();
@@ -46,9 +46,9 @@ class RegistryException : public GeneralExceptionClass {
      *
      * @param errorMessage - the error description
      */
-    RegistryException(std::string const errorMessage);
+    RegistryException(const std::string& errorMessage);
     /*
-     * distructor for the object,
+     * destructor for the object,
      * do nothing, mostly for inheritance
      */
     virtual ~RegistryException();
@@ -61,9 +61,9 @@ class ShortPathException : public GeneralExceptionClass {
      *
      * @param errorMessage - the error description
      */
-    ShortPathException(std::string const errorMessage);
+    ShortPathException(const std::string& errorMessage);
     /*
-     * distructor for the object,
+     * destructor for the object,
      * do nothing, mostly for inheritance
      */
     virtual ~ShortPathException();

@@ -17,7 +17,7 @@ class socketInterface {
     * @exceptions - bindingException is thrown when binding operation is unsuccessful
     *               AddressCreationException is thrown if address creation fails
     */
-    socketInterface(std::string const ipAddress = "127.0.0.1", std::string const port = "1234");
+    socketInterface(const std::string& ipAddress = "127.0.0.1", const std::string& port = "1234");
     /*
      * create socket interface object using SOCKET object
      *
@@ -50,7 +50,7 @@ class socketInterface {
      * @param port - the wanted port, default - 1234
      * @exceptions - AddressCreationException is thrown
      */
-    static addrinfo* createAddrInfo(std::string const ipAddress = "127.0.0.1", std::string const port = "1234");
+    static addrinfo* createAddrInfo(const std::string& ipAddress = "127.0.0.1", const std::string& port = "1234");
 
     /*
     * change the socket to a listening socket
@@ -74,7 +74,7 @@ class socketInterface {
      * @exceptions - AcceptClientException is thrown if accept operation fails
      *               AddressCreationException is thrown if address creation fails
      */
-    socketInterface acceptCommunication(std::string const ipAddress, std::string const port);
+    socketInterface acceptCommunication(const std::string& ipAddress, const std::string& port);
 
     /*
     * receiving message from user

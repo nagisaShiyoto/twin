@@ -2,7 +2,7 @@
 #include "socketInterface.h"
 #include <string>
 #include "SocketExceptions.h"
-socketInterface::socketInterface(std::string const ipAddress, std::string const port) {
+socketInterface::socketInterface(const std::string& ipAddress, const std::string& port) {
     int iResult = 0;
     addrinfo* addr = createAddrInfo(ipAddress, port);
     this->m_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -43,7 +43,7 @@ std::string socketInterface::zeroPadding(int number, int const maxDigit) {
     return padded_str;
 }
 
-addrinfo* socketInterface::createAddrInfo(std::string const ipAddress, std::string const port) {
+addrinfo* socketInterface::createAddrInfo(const std::string& ipAddress, const std::string& port) {
     addrinfo* addr;
     int iResult = getaddrinfo(ipAddress.c_str(), port.c_str(), NULL, &addr);
     if (iResult != 0) {
@@ -67,7 +67,7 @@ socketInterface socketInterface::acceptCommunication() {
     return socketInterface(clientSocket);
 }
 
-socketInterface socketInterface::acceptCommunication(std::string const ipAddress, std::string const port) {
+socketInterface socketInterface::acceptCommunication(const std::string& ipAddress, const std::string& port) {
     addrinfo* addr = createAddrInfo(ipAddress, port);
     int* addrLen = (int*)&addr->ai_addrlen;
     SOCKET clientSocket = accept(this->m_socket, addr->ai_addr, addrLen);

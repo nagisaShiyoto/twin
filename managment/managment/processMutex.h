@@ -10,7 +10,7 @@ class processMutex {
     * @param mutexName - the name of the mutex
     * @exceptions - throw MutexException exception if it could not lock the mutex with the same name
     */
-    processMutex(std::string const mutexName);
+    processMutex(const std::string& mutexName);
     /*
      * creating mutex with the name myMutex and trying top lock it
      *

@@ -1,6 +1,6 @@
 #include "MessageBoxUtils.h"
 #include <Windows.h>
 
-void createPopUp(std::string const  message, std::string const  title) {
+void createPopUp(const std::string&  message, const std::string&  title) {
     MessageBoxA(NULL, message.c_str(), title.c_str(), NULL);
 }
