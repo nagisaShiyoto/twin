@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "remoteMangerExceptions.h"
 #include "Remote_management.h"
-#include "CommunicatorHandler.h"
+#include "socketInterface.h"
 
 
 
@@ -20,16 +20,16 @@ int main() {
         std::cout << e.getError() << std::endl;
     }
 
-    CommunicatorHandler::initializeWSA();
-    SOCKET listeningSocket = CommunicatorHandler::createListeningSocket();
-    SOCKET clientSocket = CommunicatorHandler::acceptCommunication(listeningSocket);
-    std::cout << CommunicatorHandler::recvMessage(clientSocket, 5);
-    CommunicatorHandler::sendMessage(clientSocket, "asdasdasd");
+    socketInterface::initializeWSA();
+    socketInterface listeningSocket;
+    listeningSocket.listenCommunication();
+    socketInterface clientSocket = listeningSocket.acceptCommunication();
+    std::cout << clientSocket.recvMessage() << std::endl;
+    clientSocket.sendMessage("asdasdasd");
 
     
 
 
-    closesocket(clientSocket);
-    closesocket(listeningSocket);
+
     WSACleanup();
 }
