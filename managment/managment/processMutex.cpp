@@ -1,7 +1,8 @@
 #include "processMutex.h"
 #include "remoteMangerExceptions.h"
 #define MUTEX_DEFULT_NAME "myMutex"
-processMutex::processMutex(std::string const mutexName) {
+
+processMutex::processMutex(const std::string& mutexName) {
     this->m_mutex = CreateMutexA(NULL, FALSE, mutexName.c_str());
 
     if (WaitForSingleObject(this->m_mutex, 0) == WAIT_TIMEOUT) {

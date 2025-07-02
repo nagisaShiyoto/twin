@@ -1,7 +1,8 @@
 #pragma once
-#define PATH_SIZE 100
 #include <Windows.h>
 #include "processMutex.h"
+
+#define PATH_SIZE 100
 
 class RemoteManagement {
   public:

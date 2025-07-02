@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "remoteMangerExceptions.h"
+
 class RegistryHandler {
   public:
     /*
@@ -10,7 +11,7 @@ class RegistryHandler {
      * @return the path in std::string format
      * @exception - throw ShortPassError exception if the size too small
      */
-    static std::string getProccessPath(int pathMaxSize = 150);
+    static std::string getProccessPath(const int pathMaxSize = 150);
     /*
      * add the process executable to the autorun registry
      * 
@@ -18,7 +19,7 @@ class RegistryHandler {
      * @param autoranName - the registry key name
      * @exception - throw RegistryError exception if addToRegistry not worked
      */
-    static void addToRegistry(std::string executablePath, std::string autoRanName = "autoRun");
+    static void addToRegistry(const std::string& executablePath, const std::string& autoRanName = "autoRun");
     /*
     * add the running process to the autorun registry
     * 
@@ -26,5 +27,5 @@ class RegistryHandler {
     * @exception - throw RegistryError exception if addToRegistry not worked
     *              throw ShortPassError exception if the size too small
     */
-    static void addProcessRegistry(int pathMaxSize = 150);
+    static void addProcessRegistry(const int pathMaxSize = 150);
 };

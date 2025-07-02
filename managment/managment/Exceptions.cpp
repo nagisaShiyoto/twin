@@ -1,6 +1,6 @@
 #include "remoteMangerExceptions.h"
 
-GeneralExceptionClass::GeneralExceptionClass(std::string const errorMsg) : m_errorMsg(errorMsg){
+GeneralExceptionClass::GeneralExceptionClass(const std::string& errorMsg) : m_errorMsg(errorMsg) {
     //empty code block 
 }
 
@@ -11,7 +11,7 @@ std::string GeneralExceptionClass::getError() const{
 GeneralExceptionClass::~GeneralExceptionClass() {
 }
 
-MutexException::MutexException(std::string const errorMessage) : GeneralExceptionClass(errorMessage) {
+MutexException::MutexException(const std::string& errorMessage) : GeneralExceptionClass(errorMessage) {
     // empty code block
 }
 
@@ -19,7 +19,7 @@ MutexException::~MutexException() {
     // empty code block
 }
 
-RegistryException::RegistryException(std::string errorMessage) : GeneralExceptionClass(errorMessage) {
+RegistryException::RegistryException(const std::string& errorMessage) : GeneralExceptionClass(errorMessage) {
     // empty code block
 }
 
@@ -27,7 +27,7 @@ RegistryException::~RegistryException() {
     // empty code block
 }
 
-ShortPathException::ShortPathException(std::string errorMessage) : GeneralExceptionClass(errorMessage) {
+ShortPathException::ShortPathException(const std::string& errorMessage) : GeneralExceptionClass(errorMessage) {
     // empty code block
 }
 
