@@ -4,7 +4,6 @@
 
 #define ERROR_SIZE 100
 #define AUTORUN_REGISTRY_PATH "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
-#define AUTORAN_NAME "remote_manager"
 
 std::string RegistryHandler::getProccessPath(int size) {
     std::string executablePath("", size);
