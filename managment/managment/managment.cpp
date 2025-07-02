@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <windows.h>
+
+#include "remoteMangerExceptions.h"
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include "Remote_management.h"
@@ -15,8 +17,14 @@
 int main() {
     try {
         RemoteManagement manager;
-    } catch (const std::exception& e) {
-        std::cout << e.what() << std::endl;
+    } catch (const MutexException e) {
+        std::cout << "couldn't create mutex:" << std::endl;
+        std::cout << e.getError() << std::endl;
+    } catch (const ShortPathException e) {
+        std::cout << e.getError() << std::endl;
+    } catch (const RegistryException e) {
+        std::cout << "registry error:" << std::endl;
+        std::cout << e.getError() << std::endl;
     }
 
     char* buffer = (char*)malloc(sizeof(char) * 10);

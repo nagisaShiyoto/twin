@@ -1,26 +1,23 @@
 #include "registryHandler.h"
 #include <Windows.h>
+#include "remoteMangerExceptions.h"
 
 #define ERROR_SIZE 100
 #define AUTORUN_REGISTRY_PATH "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
 #define AUTORAN_NAME "remote_manager"
 
-std::string registryHandler::getProccessPath(int size) {
-    char* executablePath = (char*)malloc(sizeof(char) * size);
+std::string RegistryHandler::getProccessPath(int size) {
+    std::string executablePath("", size);
     DWORD pathSize = size;
-    std::string strPath = "";
-    QueryFullProcessImageNameA(GetCurrentProcess(), 0, executablePath, &pathSize);
+    QueryFullProcessImageNameA(GetCurrentProcess(), 0, const_cast<char*>(executablePath.c_str()), &pathSize);
     if (pathSize == size)
     {
-        free(executablePath);
-        throw std::exception("couldn't get process path");
+        throw ShortPathException("couldn't get process path\npath size too small");
     }
-    strPath.assign(executablePath);
-    free(executablePath);
-    return strPath;
+    return executablePath;
 }
 
-void registryHandler::addToRegistry(std::string executablePath, std::string autoranName) {
+void RegistryHandler::addToRegistry(std::string const executablePath, std::string const autoranName) {
     char error[ERROR_SIZE] = {0};
 
     LSTATUS status = RegSetKeyValueA(HKEY_CURRENT_USER, AUTORUN_REGISTRY_PATH, autoranName.c_str(), REG_SZ,
@@ -28,11 +25,12 @@ void registryHandler::addToRegistry(std::string executablePath, std::string auto
     
     if (status != ERROR_SUCCESS) {
         FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, NULL, NULL, error, ERROR_SIZE, NULL);
-        std::exception(error);
+        throw RegistryException(error);
     }
 }
 
-void registryHandler::addProcessRegistry(int size) {
-    std::string executablePath = registryHandler::getProccessPath(size);
-    registryHandler::addToRegistry(executablePath);
+void RegistryHandler::addProcessRegistry(int size) {
+    std::string executablePath = RegistryHandler::getProccessPath(size);
+    RegistryHandler::addToRegistry(executablePath);
 }
+

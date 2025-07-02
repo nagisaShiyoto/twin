@@ -7,4 +7,4 @@
  * @param message - the message in the popup
  * @param title - the title of the popup
  */
-void createPopUp(std::string message = "MANAGMENT PROGRAM IS UP", std::string title = "");
+void createPopUp(std::string const message = "MANAGMENT PROGRAM IS UP", std::string const title = "");
