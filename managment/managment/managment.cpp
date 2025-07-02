@@ -4,7 +4,6 @@
 #include "remoteMangerExceptions.h"
 
 int main() {
-
     try {
         RemoteManagement manager;
     } catch (const GeneralExceptionClass e) {

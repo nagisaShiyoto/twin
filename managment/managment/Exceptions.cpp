@@ -1,7 +1,7 @@
 #include "remoteMangerExceptions.h"
 
 GeneralExceptionClass::GeneralExceptionClass(const std::string& errorMsg) : m_errorMsg(errorMsg) {
-    //empty code block 
+    // empty code block 
 }
 
 std::string GeneralExceptionClass::getError() const{
@@ -9,6 +9,7 @@ std::string GeneralExceptionClass::getError() const{
 }
 
 GeneralExceptionClass::~GeneralExceptionClass() {
+    // empty code block
 }
 
 MutexException::MutexException(const std::string& errorMessage) : GeneralExceptionClass(errorMessage) {
