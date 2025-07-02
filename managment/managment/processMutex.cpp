@@ -1,6 +1,8 @@
 #include "processMutex.h"
 #include "remoteMangerExceptions.h"
+
 #define MUTEX_DEFULT_NAME "myMutex"
+
 processMutex::processMutex(const std::string& mutexName) {
     this->m_mutex = CreateMutexA(NULL, FALSE, mutexName.c_str());
 

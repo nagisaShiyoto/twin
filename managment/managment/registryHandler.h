@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "remoteMangerExceptions.h"
+
 class RegistryHandler {
   public:
     /*

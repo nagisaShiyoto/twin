@@ -1,5 +1,6 @@
 #pragma once
 #include "remoteMangerExceptions.h"
+
 class generalSocketException : public GeneralExceptionClass {
   public:
     /*
