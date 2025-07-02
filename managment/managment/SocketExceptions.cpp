@@ -1,9 +1,10 @@
 #include "SocketExceptions.h"
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <string>
 
 generalSocketException::generalSocketException(const std::string& error) : GeneralExceptionClass(error){
-    this->m_errorMsg += " failed with error:" + WSAGetLastError();
+    this->m_errorMsg += " failed with error:" + std::to_string(WSAGetLastError());
 	this->m_errorMsg +="\nyou can check the error code in this link:\n"
                         "https://learn.microsoft.com/en-us/windows/win32/winsock/windows-sockets-error-codes-2";
 }
@@ -58,4 +59,12 @@ AcceptClientException::AcceptClientException(const std::string& error) : general
 
 AcceptClientException::~AcceptClientException() {
 	//empty code block
+}
+
+SocketDisconnectedException::SocketDisconnectedException(const std::string& error) : GeneralExceptionClass(error){
+    // empty code block
+}
+
+SocketDisconnectedException::~SocketDisconnectedException() {
+    // empty code block
 }

@@ -8,7 +8,7 @@ def main():
     
     ping_socket = socket.socket()
     ping_socket.connect((SERVER_IP, PORT))
-    message = "asdasdasdasdasdasdjkflhns;lkjfn;ljshdjv"
+    message = "PING"
     message_size = str(len(message))
     ping_socket.send(f"{message_size.zfill(MAX_MESSAGE_SIZE_DIGITS)}{message}".encode())
     message = ping_socket.recv(1024)

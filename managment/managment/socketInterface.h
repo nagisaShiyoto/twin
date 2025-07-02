@@ -4,7 +4,7 @@
 #include <iostream>
 #include <winsock2.h>
 #include <ws2tcpip.h>
-
+#include "WsaInitializer.h"
 // Need to link with Ws2_32.lib
 #pragma comment(lib, "ws2_32.lib")
 class socketInterface {
@@ -13,11 +13,11 @@ class socketInterface {
     * create the socket using certain address
     * 
     * @param ipAddress - the source ip address for this socket, default - callback("127.0.0.1")
-    * @param port - the source port of this socket, default "1234"
+    * @param port - the source port of this socket
     * @exceptions - bindingException is thrown when binding operation is unsuccessful
     *               AddressCreationException is thrown if address creation fails
     */
-    socketInterface(const std::string& ipAddress = "127.0.0.1", const std::string& port = "1234");
+    socketInterface(const std::string& port, const std::string& ipAddress = "127.0.0.1");
     /*
      * create socket interface object using SOCKET object
      *
@@ -25,15 +25,13 @@ class socketInterface {
      */
     socketInterface(SOCKET mySocket);
     /*
+    * create default socket, an INVALID_SOCKET
+    */
+    socketInterface();
+    /*
     * dtor for socket interface, close SOCKET object
     */
     ~socketInterface();
-    /*
-     * initialize the wsa library, specify we use wsa2.2
-     *
-     * @exceptions - when initialization fail WsaException is thrown
-     */
-    static void initializeWSA();
     /*
     * created a padded string from integer
     * 
@@ -44,14 +42,12 @@ class socketInterface {
     */
     static std::string zeroPadding(int number, int const maxDigit = 5);
     /*
-     * creating a structure with all needed address info, need to freeaddrinfo it after use
-     *
-     * @param ipAddress - the wanted ip address, default - callback(127.0.0.1)
-     * @param port - the wanted port, default - 1234
-     * @exceptions - AddressCreationException is thrown
-     */
-    static addrinfo* createAddrInfo(const std::string& ipAddress = "127.0.0.1", const std::string& port = "1234");
-
+    * changing socket to temporary or not
+    * 
+    * @param isTemp:true - make it temporary
+    *               false - make it not temporary 
+    */
+    void setTemp(const bool isTemp);
     /*
     * change the socket to a listening socket
     * exceptions - if listen fails throw ListenException
@@ -81,6 +77,7 @@ class socketInterface {
     * 
     * @param maxDigitSizeBuffer - the max digit the message's size can be, default -5
     * @return - the user's message
+    * @exceptions - when socket no longer active throw SocketDisconnectedException
     */
     std::string recvMessage(int const maxDigitSizeBuffer = 5);
     /*
@@ -94,4 +91,6 @@ class socketInterface {
 
   private:
     SOCKET m_socket;
+    bool m_tempSocket;
+    WsaInitializer m_wsaObject;
 };

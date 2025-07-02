@@ -1,35 +1,31 @@
 #define WIN32_LEAN_AND_MEAN
+
 #include "socketInterface.h"
 #include <string>
 #include "SocketExceptions.h"
-socketInterface::socketInterface(const std::string& ipAddress, const std::string& port) {
+#include "AddrInfoWrapper.h"
+
+socketInterface::socketInterface(const std::string& port, const std::string& ipAddress) : m_tempSocket(false){
     int iResult = 0;
-    addrinfo* addr = createAddrInfo(ipAddress, port);
+    AddrInfoWrapper addr(ipAddress, port);
     this->m_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    iResult = bind(this->m_socket, addr->ai_addr, addr->ai_addrlen);
+    iResult = bind(this->m_socket, addr.m_addr->ai_addr, addr.m_addr->ai_addrlen);
     if (iResult == SOCKET_ERROR) {
         throw BindingException("Binding");
     }
-    freeaddrinfo(addr);
 }
 
-socketInterface::socketInterface(SOCKET mySocket) : m_socket(mySocket){
+socketInterface::socketInterface(SOCKET mySocket) : m_socket(mySocket), m_tempSocket(false) {
+    //empty code block
+}
+
+socketInterface::socketInterface() : m_socket(INVALID_SOCKET), m_tempSocket(false) {
     //empty code block
 }
 
 socketInterface::~socketInterface() {
-    closesocket(this->m_socket);
-}
-
-void socketInterface::initializeWSA() {
-    WORD wVersionRequested;
-    WSADATA wsaData;
-    int err;
-
-    wVersionRequested = MAKEWORD(2, 2);
-    err = WSAStartup(wVersionRequested, &wsaData);
-    if (err != 0) {
-        throw WsaException("WSAStartup");
+    if (!this->m_tempSocket) {
+        closesocket(this->m_socket);
     }
 }
 
@@ -43,13 +39,8 @@ std::string socketInterface::zeroPadding(int number, int const maxDigit) {
     return padded_str;
 }
 
-addrinfo* socketInterface::createAddrInfo(const std::string& ipAddress, const std::string& port) {
-    addrinfo* addr;
-    int iResult = getaddrinfo(ipAddress.c_str(), port.c_str(), NULL, &addr);
-    if (iResult != 0) {
-        throw AddressCreationException("address creation");
-    }
-    return addr;
+void socketInterface::setTemp(const bool isTemp) {
+    this->m_tempSocket = isTemp;
 }
 
 void socketInterface::listenCommunication() {
@@ -68,13 +59,12 @@ socketInterface socketInterface::acceptCommunication() {
 }
 
 socketInterface socketInterface::acceptCommunication(const std::string& ipAddress, const std::string& port) {
-    addrinfo* addr = createAddrInfo(ipAddress, port);
-    int* addrLen = (int*)&addr->ai_addrlen;
-    SOCKET clientSocket = accept(this->m_socket, addr->ai_addr, addrLen);
+    AddrInfoWrapper addr(ipAddress, port);
+    int* addrLen = (int*)&addr.m_addr->ai_addrlen;
+    SOCKET clientSocket = accept(this->m_socket, addr.m_addr->ai_addr, addrLen);
     if (INVALID_SOCKET == clientSocket) {
         throw AcceptClientException("accept client operation");
     }
-    freeaddrinfo(addr);
     return socketInterface(clientSocket);
 }
 
@@ -82,7 +72,10 @@ std::string socketInterface::recvMessage(int const maxDigitSizeBuffer) {
     std::string sizeBuffer("", maxDigitSizeBuffer);
     std::string buffer = "";
     int size = 0;
-    recv(this->m_socket, const_cast<char*>(sizeBuffer.c_str()), maxDigitSizeBuffer, 0);
+    recv(this->m_socket, const_cast<char*>(sizeBuffer.c_str()), maxDigitSizeBuffer, 0); 
+    if (sizeBuffer[0] == NULL) {
+        throw SocketDisconnectedException("socket disconnected abruptly");
+    }
     size = stoi(sizeBuffer);
     buffer.resize(size);
     recv(this->m_socket, const_cast<char*>(buffer.c_str()), size, 0);
