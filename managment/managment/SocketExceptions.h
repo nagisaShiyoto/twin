@@ -109,7 +109,7 @@ class AcceptClientException : public generalSocketException {
 class SocketDisconnectedException : public GeneralExceptionClass {
   public:
     /*
-     * create SocketDisconnectedException object(inherit from general socket error class)
+     * create SocketDisconnectedException object(inherit from general error class)
      *
      * @param error - the error description
      */
@@ -119,4 +119,19 @@ class SocketDisconnectedException : public GeneralExceptionClass {
      * do nothing, mostly for inheritance
      */
     virtual ~SocketDisconnectedException();
+};
+
+class sendSocketException : public generalSocketException {
+  public:
+    /*
+     * create sendSocketException object(inherit from general socket socket error class)
+     *
+     * @param error - the error description
+     */
+    sendSocketException(const std::string& error);
+    /*
+     * destructor for the object,
+     * do nothing, mostly for inheritance
+     */
+    virtual ~sendSocketException();
 };

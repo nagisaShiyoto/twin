@@ -72,8 +72,8 @@ std::string socketInterface::recvMessage(int const maxDigitSizeBuffer) {
     std::string sizeBuffer("", maxDigitSizeBuffer);
     std::string buffer = "";
     int size = 0;
-    recv(this->m_socket, const_cast<char*>(sizeBuffer.c_str()), maxDigitSizeBuffer, 0); 
-    if (sizeBuffer[0] == NULL) {
+    int byteReceived = recv(this->m_socket, const_cast<char*>(sizeBuffer.c_str()), maxDigitSizeBuffer, 0); 
+    if (byteReceived == 0) {
         throw SocketDisconnectedException("socket disconnected abruptly");
     }
     size = stoi(sizeBuffer);
@@ -85,5 +85,8 @@ std::string socketInterface::recvMessage(int const maxDigitSizeBuffer) {
 void socketInterface::sendMessage(std::string message, int const maxDigitSizeBuffer) {
     int message_size = message.length();
     std::string fullMessage = zeroPadding(message_size, maxDigitSizeBuffer) + message;
-    send(this->m_socket, fullMessage.c_str(), message_size + maxDigitSizeBuffer, 0);
+    int iResult = send(this->m_socket, fullMessage.c_str(), message_size + maxDigitSizeBuffer, 0);
+    if (SOCKET_ERROR == iResult) {
+        throw sendSocketException("sending");
+    }
 }

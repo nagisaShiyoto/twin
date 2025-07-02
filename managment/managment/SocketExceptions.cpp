@@ -68,3 +68,11 @@ SocketDisconnectedException::SocketDisconnectedException(const std::string& erro
 SocketDisconnectedException::~SocketDisconnectedException() {
     // empty code block
 }
+
+sendSocketException::sendSocketException(const std::string& error) : generalSocketException(error) {
+	// empty code block
+}
+
+sendSocketException::~sendSocketException() {
+	// empty code block
+}
