@@ -16,5 +16,5 @@ int main() {
         std::cout << "registry error:" << std::endl;
         std::cout << e.getError() << std::endl;
     }
-    return 1;
+    return 0;
 }
