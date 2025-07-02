@@ -1,8 +1,8 @@
 #include "Remote_management.h"
 #include "registryHandler.h"
-#include "windowsApiHandlers.h"
+#include "MessageBoxUtils.h"
 
 RemoteManagement::RemoteManagement() { 
-    RegistryHandler::addProcessRegistry(10);
+    RegistryHandler::addProcessRegistry();
     createPopUp();
 };

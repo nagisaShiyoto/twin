@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <iostream>
-#include "GeneralErrorClass.h"
+#include "remoteMangerExceptions.h"
 class processMutex {
   public:
     /*
@@ -27,18 +27,3 @@ class processMutex {
     HANDLE m_mutex;
 };
 
-
-class MutexError : public GeneralErrorClass {
-  public:
-    /*
-    * create mutex error object(inherit from general error class)
-    * 
-    * @param errorMessage - the error description
-    */
-    MutexError(std::string const errorMessage);
-    /*
-    * distructor for the object, 
-    * do nothing, mostly for inheritance
-    */
-    ~MutexError();
-};

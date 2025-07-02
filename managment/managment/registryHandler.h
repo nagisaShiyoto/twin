@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "GeneralErrorClass.h"
+#include "remoteMangerExceptions.h"
 class RegistryHandler {
   public:
     /*
@@ -27,34 +27,4 @@ class RegistryHandler {
     *              throw ShortPassError exception if the size too small
     */
     static void addProcessRegistry(int pathMaxSize = 150);
-};
-
-class RegistryError : public GeneralErrorClass{
-  public:
-    /*
-     * create registry error object(inherit from general error class)
-     *
-     * @param errorMessage - the error description
-     */
-    RegistryError(std::string const errorMessage);
-    /*
-     * distructor for the object,
-     * do nothing, mostly for inheritance
-     */
-    ~RegistryError();
-};
-
-class ShortPathError : public GeneralErrorClass {
-  public:
-    /*
-     * create short pass error object(inherit from general error class)
-     *
-     * @param errorMessage - the error description
-     */
-    ShortPathError(std::string const errorMessage);
-    /*
-     * distructor for the object,
-     * do nothing, mostly for inheritance
-     */
-    ~ShortPathError();
 };

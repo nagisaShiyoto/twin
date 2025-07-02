@@ -1,23 +1,20 @@
 #include "registryHandler.h"
 #include <Windows.h>
+#include "remoteMangerExceptions.h"
 
 #define ERROR_SIZE 100
 #define AUTORUN_REGISTRY_PATH "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
 #define AUTORAN_NAME "remote_manager"
 
 std::string RegistryHandler::getProccessPath(int size) {
-    char* executablePath = new char[size];
+    std::string executablePath("", size);
     DWORD pathSize = size;
-    std::string strPath = "";
-    QueryFullProcessImageNameA(GetCurrentProcess(), 0, executablePath, &pathSize);
+    QueryFullProcessImageNameA(GetCurrentProcess(), 0, const_cast<char*>(executablePath.c_str()), &pathSize);
     if (pathSize == size)
     {
-        delete[] executablePath;
-        throw ShortPathError("couldn't get process path\npath size too small");
+        throw ShortPathException("couldn't get process path\npath size too small");
     }
-    strPath.assign(executablePath);
-    delete[] executablePath;
-    return strPath;
+    return executablePath;
 }
 
 void RegistryHandler::addToRegistry(std::string const executablePath, std::string const autoranName) {
@@ -28,28 +25,12 @@ void RegistryHandler::addToRegistry(std::string const executablePath, std::strin
     
     if (status != ERROR_SUCCESS) {
         FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, NULL, NULL, error, ERROR_SIZE, NULL);
-        throw RegistryError(error);
+        throw RegistryException(error);
     }
 }
 
 void RegistryHandler::addProcessRegistry(int size) {
     std::string executablePath = RegistryHandler::getProccessPath(size);
     RegistryHandler::addToRegistry(executablePath);
-}
-
-RegistryError::RegistryError(std::string errorMessage) : GeneralErrorClass(errorMessage) {
-    //empty code block
-}
-
-RegistryError::~RegistryError() {
-    //empty code block
-}
-
-ShortPathError::ShortPathError(std::string errorMessage) : GeneralErrorClass(errorMessage) {
-    //empty code block
-}
-
-ShortPathError::~ShortPathError() {
-    //empty code block
 }
 
