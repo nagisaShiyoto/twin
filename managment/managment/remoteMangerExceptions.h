@@ -33,7 +33,7 @@ class MutexException : public GeneralExceptionClass {
      */
     MutexException(const std::string& errorMessage);
     /*
-     * distructor for the object,
+     * destructor for the object,
      * do nothing, mostly for inheritance
      */
     ~MutexException();
@@ -48,7 +48,7 @@ class RegistryException : public GeneralExceptionClass {
      */
     RegistryException(const std::string& errorMessage);
     /*
-     * distructor for the object,
+     * destructor for the object,
      * do nothing, mostly for inheritance
      */
     ~RegistryException();
@@ -63,7 +63,7 @@ class ShortPathException : public GeneralExceptionClass {
      */
     ShortPathException(const std::string& errorMessage);
     /*
-     * distructor for the object,
+     * destructor for the object,
      * do nothing, mostly for inheritance
      */
     ~ShortPathException();
