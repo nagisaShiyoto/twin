@@ -1,0 +1,70 @@
+#pragma once
+#include <iostream>
+
+class GeneralExceptionClass {
+  public:
+    /*
+    *  create general errors 
+    * 
+    * @param errorMessage - the error description
+    */
+    GeneralExceptionClass(const std::string& errorMessage);
+    /*
+    * returning the error description
+    * 
+    * @return - the error description
+    */
+    virtual std::string getError() const;
+    /*
+    * function dtor for inheritance
+    */
+    virtual ~GeneralExceptionClass();
+
+  protected:
+    std::string m_errorMsg;
+};
+
+class MutexException : public GeneralExceptionClass {
+  public:
+    /*
+     * create mutex error object(inherit from general error class)
+     *
+     * @param errorMessage - the error description
+     */
+    MutexException(const std::string& errorMessage);
+    /*
+     * destructor for the object,
+     * do nothing, mostly for inheritance
+     */
+    virtual ~MutexException();
+};
+
+class RegistryException : public GeneralExceptionClass {
+  public:
+    /*
+     * create registry error object(inherit from general error class)
+     *
+     * @param errorMessage - the error description
+     */
+    RegistryException(const std::string& errorMessage);
+    /*
+     * destructor for the object,
+     * do nothing, mostly for inheritance
+     */
+    virtual ~RegistryException();
+};
+
+class ShortPathException : public GeneralExceptionClass {
+  public:
+    /*
+     * create short pass error object(inherit from general error class)
+     *
+     * @param errorMessage - the error description
+     */
+    ShortPathException(const std::string& errorMessage);
+    /*
+     * destructor for the object,
+     * do nothing, mostly for inheritance
+     */
+    virtual ~ShortPathException();
+};
