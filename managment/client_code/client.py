@@ -11,6 +11,8 @@ def main():
     message = "asdasdasdasdasdasdjkflhns;lkjfn;ljshdjv"
     message_size = str(len(message))
     ping_socket.send(f"{message_size.zfill(MAX_MESSAGE_SIZE_DIGITS)}{message}".encode())
+    message = ping_socket.recv(1024)
+    print(message)
 
 if __name__ == "__main__":
     main()
