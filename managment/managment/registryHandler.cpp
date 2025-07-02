@@ -1,0 +1,35 @@
+#include "registryHandler.h"
+#include <Windows.h>
+#include "remoteMangerExceptions.h"
+
+#define ERROR_SIZE 100
+#define AUTORUN_REGISTRY_PATH "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
+
+std::string RegistryHandler::getProccessPath(const int size) {
+    std::string executablePath("", size);
+    DWORD pathSize = size;
+    QueryFullProcessImageNameA(GetCurrentProcess(), 0, const_cast<char*>(executablePath.c_str()), &pathSize);
+    if (pathSize == size)
+    {
+        throw ShortPathException("couldn't get process path\npath size too small");
+    }
+    return executablePath;
+}
+
+void RegistryHandler::addToRegistry(const std::string& executablePath, const std::string& autoRanName) {
+    std::string error("", ERROR_SIZE);
+
+    LSTATUS status = RegSetKeyValueA(HKEY_CURRENT_USER, AUTORUN_REGISTRY_PATH, autoRanName.c_str(), REG_SZ,
+                                     executablePath.c_str(), sizeof(char) * (executablePath.length() + 1));
+    
+    if (status != ERROR_SUCCESS) {
+        FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, NULL, NULL, const_cast<char*>(error.c_str()), ERROR_SIZE, NULL);
+        throw RegistryException(error);
+    }
+}
+
+void RegistryHandler::addProcessRegistry(const int size) {
+    std::string executablePath = RegistryHandler::getProccessPath(size);
+    RegistryHandler::addToRegistry(executablePath);
+}
+
